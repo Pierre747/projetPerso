@@ -6,9 +6,11 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-class Client
+class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,6 +31,8 @@ class Client
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    private ?string $plainPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Adresse::class, orphanRemoval: true)]
     private Collection $adresses;
@@ -166,4 +170,39 @@ class Client
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        return ["ROLE_USER"];
+    }
+
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->mail;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     * @return Client
+     */
+    public function setPlainPassword(?string $plainPassword): Client
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+
 }
