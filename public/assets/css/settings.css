@@ -1,0 +1,62 @@
+/* --------------------IMPORT FONTS----------------------------- */
+
+@font-face {
+    font-family: "medula";
+    src: url("/assets/fonts/medula/MedulaOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: "varela";
+    src: url("/assets/fonts/varela/VarelaRound-Regular.ttf");
+}
+
+@font-face {
+    font-family: "shanti";
+    src: url("/assets/fonts/shanti/Shanti-Regular.ttf");
+}
+
+/* ---------------------VARIABLES------------------------------- */
+
+:root{
+      --titlefont: medula, cursive;
+      --subtitlefont: varela, sans-serif;
+      --textfont: shanti, sans-serif;
+
+      --sizemax: 1600px;
+      --sizemax2: 1000px;
+
+      --backgroundcolor: #F5EFE7;
+      --containerscolor: #D8C4B6;
+      --textcolor: #4F709C;
+      --titlescolor: #213555;
+  }
+
+
+
+/* -------------------GENERAL SETTINGS-------------------------- */
+
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: 0.3s ease;
+  }
+
+html{
+    scroll-behavior: smooth;
+}
+
+li {
+    list-style-type: none;
+}
+
+body {
+    text-align: center;
+    font-family: var(--textfont);
+    background: var(--backgroundcolor);
+}
+
+a, a:visited  {
+    text-decoration: none;
+    color: var(--textcolor);
+}
