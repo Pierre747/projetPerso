@@ -9,10 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 
 class ProduitController extends AbstractController
 {
@@ -21,6 +23,14 @@ class ProduitController extends AbstractController
     {
         return $this->render('produit/index.html.twig', [
             'liste_produit' => $repository->findAll()
+        ]);
+    }
+
+    #[Route('/produit/{id}', name: 'app_produit_id', requirements: ['id'=>"\d+"])]
+    public function detailProduit(Request $request, Produit $produit): Response
+    {
+        return $this->render('produit/detail.html.twig', [
+           'detail_produit' => $produit
         ]);
     }
 
@@ -39,8 +49,17 @@ class ProduitController extends AbstractController
              * @var $file UploadedFile
              */
             $file = $form['photo']->getData();
-           $file->move($this->getParameter("photos"), uuid);
-            $produit->setPhoto(uuid);
+            $uuid = Uuid::v4();
+            $extension = $file->guessExtension();
+            $fileName = $uuid . '.' . $extension;
+            try{
+                $file->move($this->getParameter("photos"), $fileName);
+                $produit->setPhoto($fileName);
+            } catch (FileException $ex)
+            {
+                $message = $ex->getMessage();
+                echo "<script type='text/javascript'>alert(`Erreur d'upload de votre image à cause de : $message`)";
+            }
             $entityManager->persist($produit);
             $entityManager->flush();
             return $this->redirectToRoute('app_produit');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -19,16 +19,24 @@
     <section class="page-container">
 
         <section>
-            <h1>Ze Good Corner</h1>
+            <h1 class="header-container">Ze Good Corner</h1>
             <div class="navbar-container">
+                {% if app.user %}
+                <span>Hello {{ app.user.nom }} 🖐🏻</span>
+                {% else %}
+                {% endif %}
                 <nav>
                     <ul class="nav-links">
                         <a href="{{ path('app_home') }}"><li>Accueil</li></a>
-                        <li>recherche</li>
+                        <a href="{{ path('app_home_search') }}"><li>recherche</li></a>
                         {% if app.user %}
-                            <a href="{{ path('app_logout') }}"><span>Hello {{ app.user.nom }}</span><li>se déconnecter</li></a>
+                            <a href="{{ path('app_produit_new') }}"><li>Vendre</li></a>
+                        {% else %}
+                        {% endif %}
+                        {% if app.user %}
+                            <a href="{{ path('app_logout') }}"><li>se déconnecter</li></a>
                             {% else %}
-                                <a href="{{ path('app_login') }}"><li>se loguer</li></a>
+                                <a href="{{ path('app_login') }}"><li>espace client</li></a>
                         {% endif %}
                     </ul>
                 </nav>

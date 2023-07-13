@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -25,6 +26,7 @@ class ProduitFormType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nom'
             ])
+            ->add('description', TextareaType::class)
             ->add('photo', FileType::class, [
                 'mapped' => false
             ])

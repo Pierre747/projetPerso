@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
-
+    {% block javascripts %}
+        <script src="{{ asset('assets/js/register_form.js') }}"></script>
+    {% endblock %}
 {% block body %}
 
     {{ form(register_form) }}
+
+    <a href="{{ path('app_login') }}">Retour au login</a>
 
 {% endblock %}
 
 {% block title %}
 
 {% endblock %}
-

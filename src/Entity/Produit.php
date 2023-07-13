@@ -19,6 +19,9 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
     #[ORM\Column]
     private ?int $prix = null;
 
@@ -93,5 +96,21 @@ class Produit
     public function setPhoto(?string $photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

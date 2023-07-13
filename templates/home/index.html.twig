@@ -4,11 +4,23 @@
 
 {% block body %}
 
-    <div class="search-box">
-                <span class="search-box-container">
-                    <img src="assets/images/search.png" class="search-box-pic" alt="first-pic">
-                </span>
-        <p>Recherchez, trouvez, <strong>achetez</strong></p>
+    <div class="img-box">
+        <div class="image-container1">
+            <img src="assets/images/search.png" class="search-box-pic" alt="first-pic">
+        </div>
+        <div class="image-container2">
+            <img src="assets/images/buy.png" class="find-box-pic" alt="second-pic">
+        </div>
+        <div class="image-container3">
+            <img src="assets/images/money.png" class="buy-box-pic" alt="third-pic">
+        </div>
     </div>
 
+<div class="cards">
+    {%for product in liste_produit %}
+        {% include 'cards/card.html.twig' with {product: product} %}
+    {% endfor %}
+</div>
+
 {% endblock %}
+

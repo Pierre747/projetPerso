@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}Détails des produits{% endblock %}
 
 {% block body %}
 
@@ -11,6 +11,9 @@
         <td>{{ item.prix }}</td>
         <td>{{ item.stock }}</td>
         <td>{{ item.categorie.nom }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.photo }}</td>
+        <td><img src="{{ asset('assets/uploaded_files/' ~ item.photo)}}" alt="product-pic" width="150"/></td>
         <td><a href="{{ path('app_produit_delete', {'id': item.id}) }}">Supprimer</a> <a href="{{ path('app_produit_edit', {'id': item.id}) }}">Editer</a></td>
     </tr>
     {% endfor %}
