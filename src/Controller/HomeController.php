@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,8 +18,19 @@ class HomeController extends AbstractController
     }
 
     #[Route('/search', name: 'app_home_search')]
-    public function search(): Response
+    public function search(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, Request $request): Response
     {
-        return $this->render('home/search.html.twig');
+        $resultats = [];
+        $data = $request->query;
+        if($data->count()==2){
+            $annonce = $data->get('annonce');
+            $categorie = $data->get('categorie');
+            $resultats = $produitRepository->search($categorie, $annonce);
+        }
+
+        return $this->render('home/search.html.twig', [
+            'categorie_list' => $categorieRepository->findAll(),
+            'resultats' => $resultats
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Categorie;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,26 @@ class ProduitRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function search(string $categorie, string $annonce)
+    {
+        $query = $this->createQueryBuilder('produit');
+
+        if(!empty($categorie))
+        {
+            $query->join('produit.categorie', 'c');
+            $query->andWhere('c.id = :categorie');
+            $query->setParameter(':categorie', $categorie);
+        }
+
+        if(!empty($annonce))
+        {
+            $query->andWhere('(produit.description LIKE :annonce OR produit.nom LIKE :annonce)');
+            $query->setParameter(':annonce', "%$annonce%");
+        }
+
+        return $query->getQuery()->getResult();
     }
 
 //    /**

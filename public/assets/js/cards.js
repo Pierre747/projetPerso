@@ -2,6 +2,7 @@ window.onload = function() {
     let zindex = 10;
     const cards = document.querySelectorAll("div.card");
     cards.forEach(function(card) {
+        card.querySelector("div.card-flap.flap2 > div > a").addEventListener('click', function (e) { console.log(e.target); window.location.href=e.target.href} );
         card.addEventListener("click", function(e) {
             e.preventDefault();
 
