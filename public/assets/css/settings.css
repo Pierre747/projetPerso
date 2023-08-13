@@ -17,32 +17,31 @@
 
 /* ---------------------VARIABLES------------------------------- */
 
-:root{
-      --titlefont: medula, cursive;
-      --subtitlefont: varela, sans-serif;
-      --textfont: shanti, sans-serif;
+:root {
+    --titlefont: medula, cursive;
+    --subtitlefont: varela, sans-serif;
+    --textfont: shanti, sans-serif;
 
-      --sizemax: 1600px;
-      --sizemax2: 1000px;
+    --sizemax: 1600px;
+    --sizemax2: 1000px;
 
-      --backgroundcolor: #F5EFE7;
-      --containerscolor: #D8C4B6;
-      --textcolor: #4F709C;
-      --titlescolor: #213555;
-  }
-
+    --backgroundcolor: #F5EFE7;
+    --containerscolor: #D8C4B6;
+    --textcolor: #4F709C;
+    --titlescolor: #213555;
+}
 
 
 /* -------------------GENERAL SETTINGS-------------------------- */
 
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      transition: 0.3s ease;
-  }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
 
-html{
+html {
     scroll-behavior: smooth;
 }
 
@@ -51,12 +50,25 @@ li {
 }
 
 body {
+    height: 100vh;
     text-align: center;
     font-family: var(--textfont);
     background: var(--backgroundcolor);
 }
 
-a, a:visited  {
+a, a:visited {
     text-decoration: none;
+    color: var(--textcolor);
+}
+
+footer {
+    position: static;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 40px;
+    padding: 40px 0;
+    text-align: center;
+    background-color: var(--containerscolor);
     color: var(--textcolor);
 }

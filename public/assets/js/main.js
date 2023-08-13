@@ -17,3 +17,4 @@ function delayPageLoad()
 window.addEventListener("DOMContentLoaded", function (){
     delayPageLoad();
 })
+

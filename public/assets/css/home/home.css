@@ -49,8 +49,7 @@ nav li:hover {
 /* Images */
 
 .img-box{
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 50px auto;
     max-width: var(--sizemax);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
