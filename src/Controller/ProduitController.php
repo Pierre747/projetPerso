@@ -44,6 +44,9 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitFormType::class, $produit);
         $form->handleRequest($request);
 
+        if($produit->getDescription() === null || $produit->getDescription() === ''){
+                $error_message = 'La description ne peut être ni nulle ni vide';
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var $file UploadedFile
