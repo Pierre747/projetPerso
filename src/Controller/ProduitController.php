@@ -44,28 +44,31 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitFormType::class, $produit);
         $form->handleRequest($request);
 
-        if($produit->getDescription() === null || $produit->getDescription() === ''){
-                $error_message = 'La description ne peut être ni nulle ni vide';
-        }
-        if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var $file UploadedFile
-             */
-            $file = $form['photo']->getData();
-            $uuid = Uuid::v4();
-            $extension = $file->guessExtension();
-            $fileName = $uuid . '.' . $extension;
-            try{
-                $file->move($this->getParameter("photos"), $fileName);
-                $produit->setPhoto($fileName);
-            } catch (FileException $ex)
-            {
-                $message = $ex->getMessage();
-                echo "<script type='text/javascript'>alert(`Erreur d'upload de votre image à cause de : $message`)";
+        if ($form->isSubmitted()) {
+            if($form->isValid()){
+                /**
+                 * @var $file UploadedFile
+                 */
+                $file = $form['photo']->getData();
+                $uuid = Uuid::v4();
+                $extension = $file->guessExtension();
+                $fileName = $uuid . '.' . $extension;
+                try{
+                    $file->move($this->getParameter("photos"), $fileName);
+                    $produit->setPhoto($fileName);
+                } catch (FileException $ex)
+                {
+                    //to do redirect to the error page
+                    $message = $ex->getMessage();
+                    dump($message);
+                }
+                $entityManager->persist($produit);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_produit');
+            }else{
+                //to do redirect to the error page
+                dump($form->getErrors(true));
             }
-            $entityManager->persist($produit);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_produit');
         }
 
         return $this->render("produit/form.html.twig", [
