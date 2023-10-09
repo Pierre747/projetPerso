@@ -41,6 +41,10 @@ class Produit
     #[ORM\Column]
     private ?string $photo = null;
 
+//    #[ORM\ManyToOne(inversedBy: 'produits')]
+//    #[ORM\JoinColumn(nullable: true)]
+//    private ?Client $client = null;
+
     public function getId(): ?int
     {
         return $this->id;
