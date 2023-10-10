@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,17 +18,24 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 100)]
     private ?string $prenom = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $telephone = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;

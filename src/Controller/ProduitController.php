@@ -38,29 +38,36 @@ class ProduitController extends AbstractController
     #[Route('/produit/new', name: 'app_produit_new')]
     public function createOrEdit(Request $request, EntityManagerInterface $entityManager, Produit $produit = null): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, "Vous n'avez pas le droit de créer une annonce sans être logué");
         if ($produit == null) {
             $produit = new Produit();
         }
+        $produit->setOwner($this->getUser());
+        $lienAjoutCategorie = $this->generateUrl('app_categorie_new');
         $form = $this->createForm(ProduitFormType::class, $produit);
         $form->handleRequest($request);
-
         if ($form->isSubmitted()) {
             if($form->isValid()){
-                /**
-                 * @var $file UploadedFile
-                 */
-                $file = $form['photo']->getData();
-                $uuid = Uuid::v4();
-                $extension = $file->guessExtension();
-                $fileName = $uuid . '.' . $extension;
-                try{
-                    $file->move($this->getParameter("photos"), $fileName);
-                    $produit->setPhoto($fileName);
-                } catch (FileException $ex)
-                {
-                    //to do redirect to the error page
-                    $message = $ex->getMessage();
-                    dump($message);
+                if($form['photo']){
+                    /**
+                     * @var $file UploadedFile
+                     */
+                    $file = $form['photo']->getData();
+                    $uuid = Uuid::v4();
+                    $extension = $file->guessExtension();
+                    $fileName = $uuid . '.' . $extension;
+                    try{
+                        $file->move($this->getParameter("photos"), $fileName);
+                        $produit->setPhoto($fileName);
+                    } catch (FileException $ex)
+                    {
+                        //to do redirect to the error page
+                        $message = $ex->getMessage();
+                        dump($message);
+                        return $this->render("error/error.html.twig", [
+                            'error' => $message
+                        ]);
+                    }
                 }
                 $entityManager->persist($produit);
                 $entityManager->flush();
@@ -68,11 +75,15 @@ class ProduitController extends AbstractController
             }else{
                 //to do redirect to the error page
                 dump($form->getErrors(true));
+                return $this->render("error/error.html.twig", [
+                    'errors' => $form->getErrors(true)
+                ]);
             }
         }
 
         return $this->render("produit/form.html.twig", [
-            'produit_form' => $form->createView()
+            'produit_form' => $form->createView(),
+            'lienAjoutCategorie' => $lienAjoutCategorie
         ]);
     }
 

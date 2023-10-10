@@ -23,10 +23,13 @@
     <div class="result-container">
         {% if resultats %}
             {% for produit in resultats %}
-                <h4>{{ produit.nom }}</h4>
+                <div>
+                    <h4>{{ produit.nom }}</h4>
+                    <a href="{{ path('app_produit_id', {'id': produit.id}) }}">Voir l'annonce</a>
+                </div>
             {% endfor %}
         {% else %}
-            <h3>Sorry, we don't have that 😌</h3>
+            <h3>Désolé, nous n'avons rien qui correspond à votre recherche 😌</h3>
         {% endif %}
     </div>
 {% endblock %}

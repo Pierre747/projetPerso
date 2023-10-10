@@ -24,6 +24,9 @@
         <div class="navbar-container">
             {% if app.user %}
                 <span>Hello {{ app.user.nom }} 🖐🏻</span>
+                <a href="{{ path('app_produit') }}">
+                    <span>Mes annonces</span>
+                </a>
             {% else %}
             {% endif %}
             <nav>

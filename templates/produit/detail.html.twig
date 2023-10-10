@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ detail_produit.nom }}</h1>
+    <h2>{{ detail_produit.nom }}</h2>
+    <h2>Prix : {{ detail_produit.prix }} €</h2>
+    <h3>Stock : {{ detail_produit.stock }}</h3>
+    <h3>Catégorie : {{ detail_produit.categorie.nom }}</h3>
+    {% if detail_produit.photo is defined %}
+    <img src="{{ asset('assets/uploaded_files/' ~ detail_produit.photo)}}" alt="product-pic" width="500"/>
+    {% end if %}
+    <p>{{ detail_produit.description | raw }}</p>
+    <span>Pour me contacter :</span>
 {% endblock %}
 

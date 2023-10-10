@@ -37,6 +37,8 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
+    #[ORM\ManyToOne(targetEntity: Client::class)]
+    private Client $owner;
 
     #[ORM\Column]
     private ?string $photo = null;
@@ -122,5 +124,17 @@ class Produit
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getOwner(): ?Client
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Client $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }
