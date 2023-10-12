@@ -1,16 +1,28 @@
 <?php
 
 namespace App\Entity;
-
+//Déclare le namespace où cette classe (Produit) est située.
 use App\Repository\ProduitRepository;
+//Importe la classe ProduitRepository du namespace App\Repository.
 use Doctrine\ORM\Mapping as ORM;
+//Importe la classe ORM du Doctrine ORM.
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+//Cette ligne importe la classe FileType du composant Form de Symfony.
+// FileType est souvent utilisée pour gérer les champs de formulaire liés à l'upload de fichiers.
 use Symfony\Component\HttpFoundation\File\File;
+//Cette ligne importe la classe File du composant HttpFoundation de Symfony.
+// File est utilisée pour travailler avec des fichiers dans l'application Symfony.
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+//Cette ligne importe la classe UploadedFile du composant HttpFoundation de Symfony.
+// UploadedFile est une extension de File spécifiquement conçue pour représenter un fichier uploadé à partir d'un formulaire.
 use Symfony\Component\Validator\Constraints as Assert;
+//Ça, c'est super intéressant, mais on va le voir plus tard 😌
+
+//Indique que cette classe est une entité Doctrine et spécifie la classe du repository associée.
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
+    //Attributs
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,10 +55,7 @@ class Produit
     #[ORM\Column]
     private ?string $photo = null;
 
-//    #[ORM\ManyToOne(inversedBy: 'produits')]
-//    #[ORM\JoinColumn(nullable: true)]
-//    private ?Client $client = null;
-
+    //Méthodes
     public function getId(): ?int
     {
         return $this->id;

@@ -2,6 +2,7 @@
 
 {% block body %}
 
+    {{ form_row(form._token) }}
     {{ form(register_form) }}
 
     <a href="{{ path('app_login') }}">Retour au login</a>

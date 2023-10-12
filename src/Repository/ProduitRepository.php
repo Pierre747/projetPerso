@@ -44,15 +44,13 @@ class ProduitRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('produit');
 
-        if(!empty($categorie))
-        {
+        if (!empty($categorie)) {
             $query->join('produit.categorie', 'c');
             $query->andWhere('c.id = :categorie');
             $query->setParameter(':categorie', $categorie);
         }
 
-        if(!empty($annonce))
-        {
+        if (!empty($annonce)) {
             $query->andWhere('(produit.description LIKE :annonce OR produit.nom LIKE :annonce)');
             $query->setParameter(':annonce', "%$annonce%");
         }
